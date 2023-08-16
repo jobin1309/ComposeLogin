@@ -1,4 +1,4 @@
-package com.example.login_compose.ui.login
+package com.example.login_compose.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,24 +31,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.login_compose.R
 import com.example.login_compose.navigation.ScreensRoute
 
 
-object email {
-    const val email = "email"
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
-    var email by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -69,9 +61,6 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(216.dp))
 
 
-        val iconPadding = 1.dp
-        val iconSize = 24.dp
-        val textFieldHeight = 70.dp
 
 
         Column(
@@ -91,8 +80,39 @@ fun LoginScreen(navController: NavController) {
             )
 
         }
+        emailTextField()
 
+        Spacer(modifier = Modifier.height(32.dp))
 
+        // Sign-in Button
+        Button(
+            onClick = {
+//                if (email == "jobin1309@gmail.com") {
+                    navController.navigate(ScreensRoute.Otp.route)
+//                }
+            },
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(Color.Black),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp)
+        ) {
+            Text(
+                text = "Sign In",
+                color = Color.White,
+                fontSize = 22.sp
+            )
+        }
+    }
+}
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun emailTextField() {
+        var email by remember { mutableStateOf("") }
+
+        val iconPadding = 1.dp
+        val iconSize = 24.dp
 
         OutlinedTextField(
             value = email,
@@ -111,33 +131,7 @@ fun LoginScreen(navController: NavController) {
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             modifier = Modifier
                 .fillMaxWidth()
-                .height(textFieldHeight)
+                .height(70.dp)
                 .clip(RoundedCornerShape(16.dp))
         )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Sign-in Button
-        Button(
-            onClick = { if (email == "email") navController.navigate(ScreensRoute.Otp.route) },
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(Color.White),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(textFieldHeight)
-        ) {
-            Text(
-                text = "Sign In",
-                color = Color.White,
-                fontSize = 22.sp
-            )
-        }
     }
-}
-
-
-@Composable
-@Preview(showBackground = true)
-fun previewLoginScreen() {
-    LoginScreen(rememberNavController())
-}
