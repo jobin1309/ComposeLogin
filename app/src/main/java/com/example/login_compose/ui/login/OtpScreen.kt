@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -50,7 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavController
 import com.example.login_compose.R
-import com.example.login_compose.navigation.ScreensRoute
+import com.quintetsolutions.qalert.navigation.Screens
 import com.example.login_compose.ui.login.InvalidPinAlertDialog as InvalidPinAlertDialog
 
 
@@ -132,21 +134,23 @@ fun OtpButton(otpDigits: List<String>, context: Context, navController: NavContr
             val otpEntered = otpDigits.joinToString("")
             if (otpEntered.toInt() == Otp.Otp) {
                 //Navigate to Home screen
-                navController.navigate(ScreensRoute.Home.route)
+                navController.navigate(Screens.Home.route)
             } else {
                 isInvalidPinDialogVisible = !isInvalidPinDialogVisible;
                 Toast.makeText(context, R.string.incorrect_otp, Toast.LENGTH_SHORT).show()
             }
 
         },
+        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
         shape = RoundedCornerShape(18.dp),
         enabled = otpDigits.all { it.isNotEmpty() },
         modifier = Modifier
             .fillMaxWidth()
+            .clip(RoundedCornerShape(20))
 
 
     ) {
-        Text(text = stringResource(id = R.string.verify_otp), fontSize = 25.sp, color = Color.White)
+        Text(text = stringResource(id = R.string.verify_otp), fontSize = 25.sp, color = MaterialTheme.colorScheme.onPrimary)
     }
 
     if (isInvalidPinDialogVisible) {
@@ -183,7 +187,7 @@ fun OtpDigitBox(
             }
         },
         textStyle = TextStyle.Default.copy(
-            fontSize = 24.sp, color = Color.Black
+            fontSize = 24.sp, color = MaterialTheme.colorScheme.primary
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Number,

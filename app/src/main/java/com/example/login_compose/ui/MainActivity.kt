@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.login_compose.navigation.NavGraph
-import com.example.login_compose.ui.screens.LoginScreen
 import com.example.login_compose.ui.theme.Login_composeTheme
+import com.quintetsolutions.qalert.navigation.NavGraphSetup
 
 class MainActivity : ComponentActivity() {
 
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     navController = rememberNavController()
-                    NavGraph(navController = navController)
+                    NavGraphSetup(navController = navController)
                 }
             }
         }
